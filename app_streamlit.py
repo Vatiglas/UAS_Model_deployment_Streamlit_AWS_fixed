@@ -1,12 +1,3 @@
-"""
-Streamlit UI for the Credit Score classifier hosted on SageMaker.
-
-Reads endpoint name and region from environment variables.
-boto3 picks up AWS credentials from:
-  - the EC2 instance profile (when running on EC2 with LabInstanceProfile), OR
-  - ~/.aws/credentials (when running locally)
-"""
-
 import json
 import os
 
@@ -60,7 +51,7 @@ def invoke_endpoint(input_data: dict) -> dict:
 
 st.set_page_config(page_title="Credit Score Classifier", page_icon="💳", layout="wide")
 
-st.title("💳 Credit Score Classifier")
+st.title("Credit Score Classifier")
 st.write(
     f"Prediksi performa kredit nasabah via AWS SageMaker endpoint "
     f"(`{ENDPOINT_NAME}`, region `{REGION}`)."
@@ -68,7 +59,7 @@ st.write(
 st.divider()
 
 # ── User Inputs ─────────────────────────────────────────────────────────────
-st.subheader("📋 Profil Nasabah")
+st.subheader("Profil Nasabah")
 col1, col2, col3, col4 = st.columns(4)
 with col1:
     age = st.number_input("Usia", min_value=10, max_value=100, value=35)
@@ -79,7 +70,7 @@ with col3:
 with col4:
     payment_min = st.selectbox("Hanya Bayar Minimum?", ["No", "Yes"], index=0)
 
-st.subheader("💰 Pendapatan & Tabungan")
+st.subheader("Pendapatan & Tabungan")
 col5, col6, col7, col8 = st.columns(4)
 with col5:
     annual_income = st.number_input("Pendapatan Tahunan (USD)", min_value=0.0, value=50000.0, step=1000.0)
@@ -90,7 +81,7 @@ with col7:
 with col8:
     amount_invested = st.number_input("Investasi Bulanan (USD)", min_value=0.0, value=100.0, step=10.0)
 
-st.subheader("🏦 Profil Kredit")
+st.subheader("Profil Kredit")
 col9, col10, col11, col12 = st.columns(4)
 with col9:
     num_bank_accounts = st.number_input("Jumlah Rekening Bank", min_value=0, value=3)
@@ -111,7 +102,7 @@ with col15:
 with col16:
     credit_history = st.number_input("Lama Riwayat Kredit (bulan)", min_value=0, value=60)
 
-st.subheader("⏱️ Riwayat Pembayaran")
+st.subheader("Riwayat Pembayaran")
 col17, col18, col19, col20 = st.columns(4)
 with col17:
     delay_due_date = st.number_input("Rata-rata Keterlambatan (hari)", min_value=0, value=10)
@@ -124,7 +115,6 @@ with col20:
 
 payment_behaviour = st.selectbox("Perilaku Pembayaran", PAYMENT_BEHAVIOUR_OPTIONS, index=4)
 
-# ── Predict ─────────────────────────────────────────────────────────────────
 if st.button("🔍 Predict", type="primary"):
     input_data = {
         "Age": age,
@@ -161,7 +151,7 @@ if st.button("🔍 Predict", type="primary"):
         st.error(f"AWS error: {e.response['Error'].get('Message', str(e))}")
     else:
         label = result["labels"][0]
-        proba_dict = result["probabilities"][0]   # dict: {"Good": 49.58, "Poor": 11.45, "Standard": 38.96}
+        proba_dict = result["probabilities"][0] 
         color = CLASS_COLORS[label]
 
         st.success(f"Predicted Credit Score: **{label}**")

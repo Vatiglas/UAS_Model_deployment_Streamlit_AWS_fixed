@@ -49,7 +49,7 @@ def invoke_endpoint(input_data: dict) -> dict:
     return json.loads(response["Body"].read().decode("utf-8"))
 
 
-st.set_page_config(page_title="Credit Score Classifier", page_icon="💳", layout="wide")
+st.set_page_config(page_title="Credit Score Classifier", page_icon="", layout="wide")
 
 st.title("Credit Score Classifier")
 st.write(

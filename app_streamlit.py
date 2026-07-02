@@ -115,7 +115,7 @@ with col20:
 
 payment_behaviour = st.selectbox("Perilaku Pembayaran", PAYMENT_BEHAVIOUR_OPTIONS, index=4)
 
-if st.button("🔍 Predict", type="primary"):
+if st.button("Predict", type="primary"):
     input_data = {
         "Age": age,
         "Annual_Income": annual_income,
